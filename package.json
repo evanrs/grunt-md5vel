@@ -1,7 +1,7 @@
 {
   "name": "grunt-md5vel",
   "description": "Generates md5 filenames.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/evanrs/grunt-md5vel",
   "author": {
     "name": "Evan Schneider",
