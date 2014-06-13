@@ -63,22 +63,24 @@ module.exports = function(grunt) {
       })
       .forEach(function(srcFile) {
         try {
-          var delimiter = options.delimiter || '-';
           var srcCode = grunt.file.read(srcFile, {encoding: options.encoding});
 
           var filename, destFile;
 
           var filename = {
-            prefix: path.basename(srcFile, path.extname(srcFile)),
-            hash: crypto.
-              createHash('md5').
-              update(srcCode, options.encoding).
-              digest('hex'),
-            suffix: '',
-            extension: path.extname(srcFile).replace('.', ''),
+            algorithm: resolveProperty(options.algorithm, 'md5'),
             delimiter: '-',
+            extension: path.extname(srcFile).replace('.', ''),
+            hash: '',
+            prefix: path.basename(srcFile, path.extname(srcFile)),
+            suffix: '',
             template: __template
           }
+
+          filename.hash = crypto.
+              createHash(filename.algorithm).
+              update(srcCode, options.encoding).
+              digest('hex')
 
           _.each(filename, function(v, k, c){
             filename[k] = resolveProperty(options[k], v, c)
