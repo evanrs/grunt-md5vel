@@ -20,10 +20,10 @@ function resolveProperty (attribute, original, context){
     attribute = attribute
 
   else if (_.isFunction(attribute))
-    attribute = attribute(original, context)
+    attribute = attribute.call(this, original, context)
 
   else if (attribute[original] !== void 0)
-    attribute = resolveProperty(attribute[original], original, context)
+    attribute = resolveProperty.call(this, attribute[original], original, context)
 
   return attribute;
 }
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
               digest('hex')
 
           _.each(filename, function(v, k, c){
-            filename[k] = resolveProperty(options[k], v, c)
+            filename[k] = resolveProperty.call(context, options[k], v, c)
           })
 
           if(_.isFunction(options.beforeEach)) {
