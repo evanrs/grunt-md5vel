@@ -9,6 +9,7 @@ var crypto = require('crypto');
 var _ = require('lodash');
 
 var __template = _.template(
+  "<%= folder? (folder+'/') : '' %>" +
   "<%= _.filter([prefix, hash, suffix]).join(delimiter) %>" +
   "<%= extension ? '.' + extension :'' %>");
 
@@ -71,6 +72,7 @@ module.exports = function(grunt) {
             algorithm: resolveProperty(options.algorithm, 'md5'),
             delimiter: '-',
             extension: path.extname(srcFile).replace('.', ''),
+            folder: '',
             hash: '',
             prefix: path.basename(srcFile, path.extname(srcFile)),
             suffix: '',
